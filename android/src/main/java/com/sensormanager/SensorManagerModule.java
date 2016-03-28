@@ -1,13 +1,8 @@
 package com.sensormanager;
 
-import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
-
-import android.util.Log;
 
 public class SensorManagerModule extends ReactContextBaseJavaModule {
     private static final String		REACT_CLASS = "SensorManager";
@@ -32,7 +27,12 @@ public class SensorManagerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startAccelerometer(int delay) {
-    	mAccelerometerRecord = new AccelerometerRecord(mReactContext, delay);
+        if(mAccelerometerRecord == null) {
+            mAccelerometerRecord = new AccelerometerRecord(mReactContext, delay);
+        }
+        else{
+            mAccelerometerRecord.start();
+        }
     }
 
     @ReactMethod
@@ -43,7 +43,12 @@ public class SensorManagerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startGyroscope(int delay) {
-    	mGyroscopeRecord = new GyroscopeRecord(mReactContext, delay);
+        if(mGyroscopeRecord == null) {
+            mGyroscopeRecord = new GyroscopeRecord(mReactContext, delay);
+        }
+        else{
+            mGyroscopeRecord.start();
+        }
     }
 
     @ReactMethod
@@ -54,7 +59,12 @@ public class SensorManagerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startMagnetometer(int delay) {
-    	mMagnetometerRecord = new MagnetometerRecord(mReactContext, delay);
+        if(mGyroscopeRecord == null) {
+            mMagnetometerRecord = new MagnetometerRecord(mReactContext, delay);
+        }
+        else{
+            mMagnetometerRecord.start();
+        }
     }
 
     @ReactMethod
@@ -65,7 +75,12 @@ public class SensorManagerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startStepCounter(int delay) {
-    	mStepCounterRecord = new StepCounterRecord(mReactContext, delay);
+        if(mStepCounterRecord == null) {
+            mStepCounterRecord = new StepCounterRecord(mReactContext, delay);
+        }
+        else{
+            mStepCounterRecord.start();
+        }
     }
 
     @ReactMethod
@@ -76,7 +91,12 @@ public class SensorManagerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startThermometer(int delay) {
-    	mThermometer = new ThermometerRecord(mReactContext, delay);
+        if(mThermometer == null) {
+            mThermometer = new ThermometerRecord(mReactContext, delay);
+        }
+        else{
+            mThermometer.start();
+        }
     }
 
     @ReactMethod
@@ -87,7 +107,12 @@ public class SensorManagerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void startMotionValue(int delay) {
-    	mMotionValue = new MotionValueRecord(mReactContext, delay);
+        if(mMotionValue == null) {
+            mMotionValue = new MotionValueRecord(mReactContext, delay);
+        }
+        else{
+            mMotionValue.start();
+        }
     }
 
     @ReactMethod

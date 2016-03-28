@@ -1,22 +1,17 @@
 package com.sensormanager;
 
-import android.os.Bundle;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.support.annotation.Nullable;
-
-import java.io.*;
-import java.util.Date;
-import java.util.Timer;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.bridge.ReactApplicationContext;
 
 public class StepCounterRecord implements SensorEventListener {
 
@@ -34,8 +29,12 @@ public class StepCounterRecord implements SensorEventListener {
 		this.delay = delay;
         mSensorManager = (SensorManager)reactContext.getSystemService(reactContext.SENSOR_SERVICE);
         mStepCounter = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        mSensorManager.registerListener(this, mStepCounter, SensorManager.SENSOR_DELAY_FASTEST);
+        mSensorManager.registerListener(this, mStepCounter, SensorManager.SENSOR_DELAY_NORMAL);
 		mReactContext = reactContext;
+    }
+
+    public void start(){
+        mSensorManager.registerListener(this, mStepCounter, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void stop() {

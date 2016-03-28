@@ -1,22 +1,17 @@
 package com.sensormanager;
 
-import android.os.Bundle;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.support.annotation.Nullable;
-
-import java.io.*;
-import java.util.Date;
-import java.util.Timer;
+import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.bridge.ReactApplicationContext;
 
 public class AccelerometerRecord implements SensorEventListener {
 
@@ -34,8 +29,12 @@ public class AccelerometerRecord implements SensorEventListener {
 		this.delay = delay;
         mSensorManager = (SensorManager)reactContext.getSystemService(reactContext.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 		mReactContext = reactContext;
+    }
+
+    public void start() {
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     public void stop() {
@@ -57,7 +56,6 @@ public class AccelerometerRecord implements SensorEventListener {
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
 		WritableMap map = mArguments.createMap();
-
         if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             long curTime = System.currentTimeMillis();
             i++;
