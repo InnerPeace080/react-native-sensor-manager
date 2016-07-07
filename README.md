@@ -3,7 +3,8 @@ react-native-sensor-manager
 
 Wrapper for react-native. Accelerometer, Gyroscope, Magnetometer, Step Counter, Thermometer are supported for now.
 
-## Add it to your project
+Add it to your project
+-------------------------
 
 `$ npm i react-native-sensor-manager --save`
 
@@ -34,7 +35,7 @@ dependencies {
 ```
 
 * register module (in MainActivity.java)
- 
+
   * For react-native below 0.19.0 (use `cat ./node_modules/react-native/package.json | grep version`)
 
 ```java
@@ -156,4 +157,15 @@ DeviceEventEmitter.addListener('Thermometer', function (data) {
   **/
 });
 mSensorManager.stopThermometer();
+```
+
+### LightSensor
+```js
+mSensorManager.startLightSensor(100);
+DeviceEventEmitter.addListener('LightSensor', function (data) {
+  /**
+  * data.light
+  **/
+});
+mSensorManager.stopLightSensor();
 ```

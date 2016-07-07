@@ -1,17 +1,22 @@
 package com.sensormanager;
 
+import android.os.Bundle;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.support.annotation.Nullable;
 import android.util.Log;
+import android.support.annotation.Nullable;
+
+import java.io.*;
+import java.util.Date;
+import java.util.Timer;
 
 import com.facebook.react.bridge.Arguments;
-import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.ReactApplicationContext;
 
 public class MagnetometerRecord implements SensorEventListener {
 
@@ -25,17 +30,20 @@ public class MagnetometerRecord implements SensorEventListener {
 	private Arguments mArguments;
 
 
-    public MagnetometerRecord(ReactApplicationContext reactContext, int delay) {
-		this.delay = delay;
+    public MagnetometerRecord(ReactApplicationContext reactContext) {
         mSensorManager = (SensorManager)reactContext.getSystemService(reactContext.SENSOR_SERVICE);
-        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
 		mReactContext = reactContext;
     }
 
-    public void start(){
-        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
-    }
+	public int start(int delay) {
+		this.delay = delay;
+		if ((mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)) != null) {
+			mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_FASTEST);
+			return (1);
+		}
+		return (0);
+	}
+
     public void stop() {
         mSensorManager.unregisterListener(this);
     }
